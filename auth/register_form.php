@@ -1,23 +1,23 @@
 <?php
-   require '../utils/functions.php';
-   redirect_admin_or_user();
+   require_once '../utils/db.php';
+   require_once '../utils/functions.php';
+   require_once '../classes/Client.php';
+   require_once '../gateways/clientGateway.php';
 
-   require_once 'db.php';
+   redirect_admin_or_user();
    // define variables and initialize with empty values
    $name = $email = $password = $confirm_password = "";
-   $name_err = $email_err = $password_err = $confirm_password_err = "";
+   $name_err = $email_err = $password_err = $confirm_password_err = $phone_number_err= $address_err= "";
 
    // check if the form is submitted
    if($_SERVER["REQUEST_METHOD"] == "POST"){
 
       // validate name
-      if(empty(trim($_POST["username"]))){
+      if(empty(trim($_POST["name"]))){
          $name_err = "Please enter your name.";
       } else{
-         $name = trim($_POST["username"]);
+         $name = trim($_POST["name"]);
       }
-
-   
 
       // Validate email
       if (empty(trim($_POST['email']))) {
@@ -25,22 +25,28 @@
       } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
          $email_err = 'Please enter a valid email address.';
       } else {
-         // Check if email already exists in the database
-         $conn = DB::getConnection();
          $email = trim($_POST['email']);
-         $sql = 'SELECT id FROM users WHERE email = ?';
-         $stmt = $conn->prepare($sql);
-         $stmt->bind_param('s', $email);
-         $stmt->execute();
-         $result = $stmt->get_result();
-         // Check if there is a user with the given email and password
-      if ($result->num_rows == 1) {
-         $email_err = 'This email is already taken.';
-      }
-      $stmt->close();
-   
+         $conn = DB::getConnection();
 
+         $clientTable= new ClientTable($conn);
+         $client = $clientTable->checkEmailExist($email);
+
+         if ($client) {
+            $email_err = "Email already registered";}
       }
+
+      if(empty(trim($_POST["phone_number"]))){
+         $phone_number_err = "Please enter your phone_number.";
+      } else{
+         $phone_number = trim($_POST["phone_number"]);
+      }
+
+      if(empty(trim($_POST["address"]))){
+         $address_err = "Please enter your address.";
+      } else{
+         $address = trim($_POST["address"]);
+      }
+
       // validate password
       if(empty(trim($_POST["password"]))){
          $password_err = "Please enter a password.";     
@@ -63,26 +69,20 @@
       // if there are no validation errors, insert the user data into database
       if(empty($name_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)){
 
-         // create a database connection
+
          $conn = DB::getConnection();
          
-         // prepare a SQL insert statement to insert the user data into the database
-         $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
 
-         // prepare the statement
-         $stmt = mysqli_prepare($conn, $sql);
+         $clientTable= new ClientTable($conn);
 
-         // bind the parameters to the statement
-         mysqli_stmt_bind_param($stmt, "sss", $name, $email, $password);
+         $client = new Client(null, $name, $email, $address, $phone_number, $password);
+         $id = $clientTable->insert($client);
+         $client->setId($id);
 
-         // execute the statement
-         mysqli_stmt_execute($stmt);
-
-         // close the statement and connection
-         mysqli_stmt_close($stmt);
-         mysqli_close($conn);
-
-         // redirect the user to the login page
+         // set global session user
+         $_SESSION['user'] = $client; 
+         $_SESSION['role'] = get_class($client); 
+      
          header("location: login.php");
          exit();
       }
@@ -109,16 +109,23 @@
    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <h3>register now</h3>
 
-      <input type="text" name="username" required placeholder="enter your name">
+      <input type="text" name="name"  placeholder="enter your name">
       <span><?php echo $name_err; ?></span>
 
-      <input type="email" name="email" required placeholder="enter your email">
+      <input type="email" name="email"  placeholder="enter your email">
       <span><?php echo $email_err; ?></span>
 
-      <input type="password" name="password" required placeholder="enter your password">
+      
+      <input type="text" name="phone_number"  placeholder="phone number">
+      <span><?php echo $phone_number_err; ?></span>
+
+      <input type="text" name="address"  placeholder="address">
+      <span><?php echo $address_err; ?></span>
+
+      <input type="password" name="password"  placeholder="enter your password">
       <span><?php echo $password_err; ?></span>
 
-      <input type="password" name="confirm_password" required placeholder="confirm your password">
+      <input type="password" name="confirm_password"  placeholder="confirm your password">
       <span><?php echo $confirm_password_err; ?></span>
    
       <input type="submit" name="submit" value="register now" class="form-btn">

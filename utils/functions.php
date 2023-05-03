@@ -22,7 +22,7 @@
             return;
         } else {
             $role = $_SESSION['role'];
-            if ($role === 'admin'|| $role === 'accounts' ){
+            if ($role !== 'Client' ){
                 return header('location: admin_page.php');
             }
             else {
@@ -34,11 +34,10 @@
     function is_admin(){
         is_logged_in();
         $role = $_SESSION['role'];
-        if ($role === 'admin'|| $role === 'accounts' )
+        if ($role !== 'Client' )
             return;
         else 
-            return header('location: user_page.php');
-        
+            return header('location: user_page.php'); 
     }
 
 ?>

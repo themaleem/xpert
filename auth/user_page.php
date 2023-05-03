@@ -1,6 +1,7 @@
 <?php
 
-   require_once '../utils/functions.php';
+   require_once('../utils/functions.php');
+   require_once('../classes/client.php');
    is_logged_in();
 ?>
 
@@ -22,7 +23,7 @@
 
    <div class="content">
       <h3>hi, <span><?php echo $_SESSION['role'] ?></span></h3>
-      <h1>welcome <span><?php echo $_SESSION['user']->username  ?></span></h1>
+      <h1>welcome <span><?php echo $_SESSION['user']->getName()  ?></span></h1>
       <p>this is an <?php echo $_SESSION['role'] ?> page</p>
       <a href="logout.php" class="btn">logout</a>
    </div>
