@@ -1,9 +1,8 @@
 <?php
    require '../utils/functions.php';
-   require '../classes/client.php';
-   is_admin();
+   require '../classes/staff.php';
+   redirect_if_not_admin();
 
-   var_dump($_SESSION['role'])
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@
    <title>admin page</title>
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../css/style.css">
+   <link rel="stylesheet" href="../css/../../css/style.css">
 
 </head>
 <body>
@@ -26,7 +25,7 @@
       <h3>hi, <span><?php echo $_SESSION['role'] ?></span></h3>
       <h1>welcome <span><?php echo $_SESSION['user']->getName() ?></span></h1>
       <p>this is an <?php echo $_SESSION['role'] ?> page</p>
-      <a href="logout.php" class="btn">logout</a>
+      <a href="../utils/logout.php" class="btn">logout</a>
    </div>
 
 </div>

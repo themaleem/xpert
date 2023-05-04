@@ -1,4 +1,5 @@
 <?php
+    require_once ("account.php");
 
     class Staff extends Account {
         private $role;
@@ -10,10 +11,10 @@
             $this->role = $role;
         }
 
-        public function setPhoneNumber($value){
+        public function setRole($value){
             $this->role = $value;
         }
-        public function getPhoneNumber(){
+        public function getRole(){
             return $this->role;
         }
 

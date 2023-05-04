@@ -1,6 +1,6 @@
 <?php
 
-require_once('../classes/client.php');
+require_once('../../classes/client.php');
 
 class ClientTable {
     private $link;
@@ -133,7 +133,7 @@ class ClientTable {
         $client=null;
         
         if($result->num_rows > 0) {
-            var_dump("here");
+          
             $row = $result->fetch_assoc();
             $id = $row['id'];
             $name = $row['name'];

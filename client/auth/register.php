@@ -1,10 +1,10 @@
 <?php
-   require_once '../utils/db.php';
-   require_once '../utils/functions.php';
-   require_once '../classes/Client.php';
-   require_once '../gateways/clientGateway.php';
+   require_once '../../utils/db.php';
+   require_once '../../utils/functions.php';
+   require_once '../../classes/client.php';
+   require_once '../../gateways/clientGateway.php';
 
-   redirect_admin_or_user();
+redirect_if_logged_in();
    // define variables and initialize with empty values
    $name = $email = $password = $confirm_password = "";
    $name_err = $email_err = $password_err = $confirm_password_err = $phone_number_err= $address_err= "";
@@ -99,7 +99,7 @@
    <title>register form</title>
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../css/style.css">
+   <link rel="stylesheet" href="../css/../../css/style.css">
 
 </head>
 <body>
@@ -107,7 +107,7 @@
 <div class="form-container">
 
    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-      <h3>register now</h3>
+      <h3>Client registration</h3>
 
       <input type="text" name="name"  placeholder="enter your name">
       <span><?php echo $name_err; ?></span>
@@ -129,7 +129,7 @@
       <span><?php echo $confirm_password_err; ?></span>
    
       <input type="submit" name="submit" value="register now" class="form-btn">
-      <p>already have an account? <a href="login_form.php">login now</a></p>
+      <p>already have an account? <a href="login.php">login now</a><br/>&nbsp;<a href="../../index.php">back home</a></p>
    </form>
 
 </div>

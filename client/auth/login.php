@@ -1,9 +1,9 @@
 <?php
-   require_once('../utils/functions.php');
-   require_once ('../utils/db.php');
-   require_once ('../gateways/clientGateway.php');
+   require_once('../../utils/functions.php');
+   require_once ('../../utils/db.php');
+   require_once ('../../gateways/clientGateway.php');
    
-   redirect_admin_or_user();
+   redirect_if_logged_in();
 
    $email = $password = "";
    $email_err = $password_err = $form_err = "";
@@ -45,11 +45,7 @@
          $_SESSION['user'] = $client;
          $_SESSION['role'] = $class_name;
 
-         if ($role_name ==='Client'){    
-            header("Location: user_page.php");
-         } else {
-            header("Location: admin_page.php");
-         }
+         header("Location: ../index.php");
 
          exit();
       } else {
@@ -71,7 +67,7 @@
    <title>login form</title>
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../css/style.css">
+   <link rel="stylesheet" href="../css/../../css/style.css">
 
 </head>
 <body>
@@ -90,7 +86,7 @@
       <input type="submit" name="submit" value="login now" class="form-btn">
       <span><?php echo $form_err; ?></span>
 
-      <p>don't have an account? <a href="register_form.php">register now</a></p>
+      <p>don't have an account? <a href="register.php">register now</a> <br><a href="../../index.php">back home</p>
    </form>
 
 </div>

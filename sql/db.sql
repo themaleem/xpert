@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS staffs (
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) not null UNIQUE,
   phone_number varchar(255) not null,
-  role VARCHAR(255) not null
+  role VARCHAR(255) not null,
+  password VARCHAR(255) not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
