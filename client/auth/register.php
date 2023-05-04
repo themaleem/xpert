@@ -2,7 +2,7 @@
    require_once '../../utils/db.php';
    require_once '../../utils/functions.php';
    require_once '../../classes/client.php';
-   require_once '../../gateways/clientGateway.php';
+   require_once '../../models/clientModel.php';
 
 redirect_if_logged_in();
    // define variables and initialize with empty values
@@ -28,8 +28,8 @@ redirect_if_logged_in();
          $email = trim($_POST['email']);
          $conn = DB::getConnection();
 
-         $clientTable= new ClientTable($conn);
-         $client = $clientTable->checkEmailExist($email);
+         $clientModel= new ClientModel($conn);
+         $client = $clientModel->checkEmailExist($email);
 
          if ($client) {
             $email_err = "Email already registered";}
@@ -73,10 +73,10 @@ redirect_if_logged_in();
          $conn = DB::getConnection();
          
 
-         $clientTable= new ClientTable($conn);
+         $clientModel= new ClientModel($conn);
 
          $client = new Client(null, $name, $email, $address, $phone_number, $password);
-         $id = $clientTable->insert($client);
+         $id = $clientModel->createClient($client);
          $client->setId($id);
 
          // set global session user

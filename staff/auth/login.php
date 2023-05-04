@@ -1,7 +1,7 @@
 <?php
    require_once('../../utils/functions.php');
    require_once ('../../utils/db.php');
-   require_once ('../../gateways/staffGateway.php');
+   require_once ('../../models/staffModel.php');
    redirect_if_logged_in();
 
    $email = $password = "";
@@ -30,8 +30,8 @@
       // Connect to the database
       $conn = DB::getConnection();
 
-      $staffTable = new StaffTable($conn);
-      $staff =  $staffTable->getStaffByEmail($email, $password); 
+      $staffModel = new StaffModel($conn);
+      $staff =  $staffModel->getStaffByEmailAndPassword($email, $password); 
       
 
    

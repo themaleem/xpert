@@ -1,7 +1,7 @@
 <?php
    require_once('../../utils/functions.php');
    require_once ('../../utils/db.php');
-   require_once ('../../gateways/clientGateway.php');
+   require_once ('../../models/clientModel.php');
    
    redirect_if_logged_in();
 
@@ -31,8 +31,8 @@
       // Connect to the database
       $conn = DB::getConnection();
 
-      $clientTable = new ClientTable($conn);
-      $client =  $clientTable->getClientByEmail($email, $password); 
+      $clientModel = new ClientModel($conn);
+      $client =  $clientModel->getClientByEmailAndPassword($email, $password); 
       
 
    

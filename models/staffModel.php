@@ -2,14 +2,14 @@
 
 require_once('../../classes/staff.php');
 
-class StaffTable {
+class StaffModel {
     private $link;
     
     public function __construct($connection) {
         $this->link = $connection;
     }
 
-    public function insert($staff) {
+    public function createStaff($staff) {
         if (!isset($staff)) {
             throw new Exception("staff object required");
         }
@@ -59,7 +59,7 @@ class StaffTable {
         return $staff;
     }
 
-    public function getStaffByEmail($email,$password) {
+    public function getStaffByEmailAndPassword($email,$password) {
         $sql = 'SELECT * FROM staffs WHERE email = ? and password = ?';
         $stmt = $this->link->prepare($sql);
         $stmt->bind_param('ss', $email, $password);

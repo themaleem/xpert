@@ -1,15 +1,15 @@
 <?php
 
-require_once('../../classes/client.php');
+require_once('../../classes/event.php');
 
-class ClientTable {
+class EventModel {
     private $link;
     
     public function __construct($connection) {
         $this->link = $connection;
     }
 
-    public function insert($client) {
+    public function createClient($client) {
         if (!isset($client)) {
             throw new Exception("Client object required");
         }
@@ -53,72 +53,9 @@ class ClientTable {
         }
     }
 
-    public function update_password($client) {
-        if (!isset($client)) {
-            throw new Exception("client required");
-        }
-        $id = $client->getId();
-        if ($id == null) {
-            throw new Exception("client id required");
-        }
-        $sql = "UPDATE clients SET password = :password WHERE id = :id";
-        $params = array(
-            'password' => $client->getPassword(),
-            'id' => $client->getId()
-        );
-        $stmt = $this->link->prepare($sql);
-        $status = $stmt->execute($params);
-        if ($status != true) {
-            $errorInfo = $stmt->errorInfo();
-            throw new Exception("Could not update client: " . $errorInfo[2]);
-        }
-    }
 
-    // public function getUserById($id) {
-    //     $sql = "SELECT * FROM users WHERE id = :id";
-    //     $params = array('id' => $id);
-    //     $stmt = $this->link->prepare($sql);
-    //     $status = $stmt->execute($params);
-    //     if ($status != true) {
-    //         $errorInfo = $stmt->errorInfo();
-    //         throw new Exception("Could not retrieve user: " . $errorInfo[2]);
-    //     }
 
-    //     $user = null;
-    //     if ($stmt->rowCount() == 1) {
-    //         $row = $stmt->fetch();
-    //         $username = $row['username'];
-    //         $pwd = $row['password'];
-    //         $role = $row['role'];
-    //         $user = new User($id, $username, $pwd, $role);
-    //     }
-    //     return $user;
-    // }
-
-    public function getClientByName($name) {
-        $sql = "SELECT * FROM clients WHERE name = :name";
-        $params = array('name' => $name);
-        $stmt = $this->link->prepare($sql);
-        $status = $stmt->execute($params);
-        if ($status != true) {
-            $errorInfo = $stmt->errorInfo();
-            throw new Exception("Could not retrieve Client: " . $errorInfo[2]);
-        }
-
-        $client = null;
-        if ($stmt->rowCount() == 1) {
-            $row = $stmt->fetch();
-            $id = $row['id'];
-            $email = $row['email'];
-            $phone_number = $row['phone_number'];
-            $address = $row['address'];
-            $password = $row['password'];
-            $client = new Client($id, $name, $email, $phone_number, $address, $password);
-        }
-        return $client;
-    }
-
-    public function getClientByEmail($email,$password) {
+    public function getClientByEmailAndPassword($email,$password) {
         $sql = 'SELECT * FROM clients WHERE email = ? and password = ?';
         $stmt = $this->link->prepare($sql);
         $stmt->bind_param('ss', $email, $password);

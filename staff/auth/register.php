@@ -2,7 +2,7 @@
    require_once '../../utils/db.php';
    require_once '../../utils/functions.php';
    require_once '../../classes/staff.php';
-   require_once '../../gateways/staffGateway.php';
+   require_once '../../models/staffModel.php';
 
    redirect_if_logged_in();
 
@@ -29,8 +29,8 @@
          $email = trim($_POST['email']);
          $conn = DB::getConnection();
 
-         $staffTable= new StaffTable($conn);
-         $staff = $staffTable->checkEmailExist($email);
+         $staffModel= new StaffModel($conn);
+         $staff = $staffModel->checkEmailExist($email);
 
          if ($staff) {
             $email_err = "Email already registered";}
@@ -67,12 +67,10 @@
 
 
          $conn = DB::getConnection();
-         
-
-         $staffTable= new StaffTable($conn);
+         $staffModel= new StaffModel($conn);
 
          $staff = new Staff(null, $name, $email, 'admin', $password);
-         $id = $staffTable->insert($staff);
+         $id = $staffModel->createStaff($staff);
          $staff->setId($id);
 
          // set global session user

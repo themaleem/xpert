@@ -7,6 +7,7 @@
   <body>
     <!-- header -->
     <?php include './includes/header.php';?>
+
     <section class="hero">
       <div>
         <h1>Lorem ipsum dolor sit amet</h1>
@@ -29,7 +30,8 @@
         <p>"Suspendisse vel urna at velit maximus aliquet. Aliquam ornare sapien eget fringilla consectetur."</p>
       </div>
     </section>
-    <?php include './includes/footer.php';?>
+
     <!-- footer -->
+    <?php include './includes/footer.php';?>
   </body>
 </html>

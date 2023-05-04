@@ -7,7 +7,7 @@
         private $description;
 
 
-        public function __construct($id, $name,$price,$event_type,$description) {
+        public function __construct($id, $name, $price, $event_type, $description) {
             $this->id = $id;
             $this->name = $name;
             $this->price = $price;
