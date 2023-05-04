@@ -9,10 +9,9 @@
         private $cost;
         private $client_id;
         private $staff_id;
-        private $created_at;
 
 
-        public function __construct($id, $title, $description, $venue, $date, $package_id, $cost, $client_id, $staff_id, $created_at) {
+        public function __construct($id, $title, $description, $venue, $date, $package_id, $cost, $client_id, $staff_id) {
             $this->id = $id;
             $this->title = $title;
             $this->description = $description;
@@ -22,11 +21,11 @@
             $this->package_id = $package_id;
             $this->client_id = $client_id;
             $this->staff_id = $staff_id;
-            $this->created_at = $created_at;
         }
 
 
         public function getId() { return $this->id; }
+        public function setId($value) { return $this->id=$value; }
         public function getTitle() { return $this->title; }
         public function getCost() { return $this->cost; }
         public function getDescription() { return $this->description; }

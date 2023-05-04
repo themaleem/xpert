@@ -6,6 +6,8 @@
 
    redirect_if_not_admin();
 
+   $client_id = $_SESSION['user']->getId();
+
    // define variables and initialize with empty values
    $name = $price = $event_type = $description = "";
    $name_err = $price_err = $event_type_err = $description_err = "";
@@ -49,7 +51,7 @@
          $conn = DB::getConnection();
          $packageModel= new PackageModel($conn);
 
-         $package = new Package(null, $name, $price, $event_type, $description);
+         $package = new Package(null, $name, $price, $event_type, $description, $client_id);
          $id = $packageModel->createPackage($package);
          $package->setId($id);
       

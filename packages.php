@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Packages - Your Website Name</title>
+  <title>Packages - Expert Events</title>
   <link rel="stylesheet" type="text/css" href="package.css">
 </head>
 <body>
@@ -28,7 +28,8 @@
     </div>
   </section>
 
-  <a href="/create_package.php">create package</a>
+  <?php is_admin() ? '<a href="/create_package.php">create package</a>' : ''; ?>
+  
 
   <!-- Packages section -->
   <section class="packages">
@@ -52,7 +53,7 @@
       // }
       echo "</ul>";
       echo "<p class='price'>Price: $ $price</p>";
-      echo "<a href='book/package/$id' class='button'>Book Package</a>";
+      echo "<a href='/package_booking.php?id=$id' class='button'>Book Package</a>";
       echo "</div>";
     }
   ?>

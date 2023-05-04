@@ -23,6 +23,9 @@ CREATE TABLE IF NOT EXISTS packages (
   event_type varchar(255) NOT NULL,
   price int(11) NOT NULL,
   description TEXT NOT NULL
+  client_id int(11) UNSIGNED NOT NULL,
+
+  FOREIGN KEY (client_id) REFERENCES clients(id),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -32,7 +35,7 @@ CREATE TABLE IF NOT EXISTS events (
   description TEXT NOT NULL,
   venue TEXT NOT NULL,
   cost int(11) NOT NULL,
-  event_date DATE NOT NULL,
+  date varchar NOT NULL,
   package_id int(11) UNSIGNED NOT NULL,
   client_id int(11) UNSIGNED NOT NULL,
   staff_id int(11) UNSIGNED NOT NULL,

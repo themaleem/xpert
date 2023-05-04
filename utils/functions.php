@@ -65,6 +65,6 @@
            return true;
         else if ($role === 'Client')
             return false; 
-    }    
+    }
 
 ?>
