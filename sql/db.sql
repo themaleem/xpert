@@ -76,3 +76,9 @@ CREATE TABLE IF NOT EXISTS workflow_notes (
   
   FOREIGN KEY (event_id) REFERENCES events(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+-- INSERT INTO packages (name, price, event_type, description) VALUES ('test', 1234, 'wedding', "Big big things");

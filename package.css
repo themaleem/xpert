@@ -44,14 +44,18 @@ nav {
   
   /* Hero section styles */
   .hero {
-    height: 500px;
-    background-image: url('hero-image.jpg');
-    background-size: cover;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://plus.unsplash.com/premium_photo-1664790560098-afce8eb96eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'");
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 80vh;
     display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
+    color: #fff;
   }
-  
+
   .hero-text {
     text-align: center;
     color: #fff;

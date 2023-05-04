@@ -1,8 +1,8 @@
 <?php
-   require_once '../../utils/db.php';
-   require_once '../../utils/functions.php';
-   require_once '../../classes/package.php';
-   require_once '../../models/packageModel.php';
+   require_once './utils/db.php';
+   require_once './utils/functions.php';
+   require_once './classes/package.php';
+   require_once './models/packageModel.php';
 
    redirect_if_not_admin();
 
@@ -27,37 +27,33 @@
          $price = trim($_POST["price"]);
       }
       
-      // validate password
+      // validate event type
       if(empty(trim($_POST["event_type"]))){
          $event_type_err = "Please enter your Event Type.";
       } else{
          $event_type = trim($_POST["event_type"]);
       }
 
-      // validate confirm password
-      if(empty(trim($_POST["event_type"]))){
-         $event_type_err = "Please enter your Event Type.";
+      // validate description
+      if(empty(trim($_POST["description"]))){
+         $description_err = "Please enter your description.";
       } else{
-         $event_type = trim($_POST["event_type"]);
+         $description = trim($_POST["description"]);
       }
       
       
       // if there are no validation errors, insert the user data into database
-      if(empty($name_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)){
+      if(empty($name_err) && empty($price_err) && empty($event_type_err) && empty($description_err)){
 
 
          $conn = DB::getConnection();
-         $staffModel= new StaffModel($conn);
+         $packageModel= new PackageModel($conn);
 
-         $staff = new Staff(null, $name, $email, 'admin', $password);
-         $id = $staffModel->createStaff($staff);
-         $staff->setId($id);
-
-         // set global session user
-         $_SESSION['user'] = $staff; 
-         $_SESSION['role'] = get_class($staff); 
+         $package = new Package(null, $name, $price, $event_type, $description);
+         $id = $packageModel->createPackage($package);
+         $package->setId($id);
       
-         header("location: login.php");
+         header("Location: ../packages.php");
          exit();
       }
    }
@@ -94,8 +90,8 @@
       <input type="textarea" name="description"  placeholder="package description">
       <span><?php echo $description_err; ?></span>
    
-      <input type="submit" name="submit" value="register now" class="form-btn">
-      <!-- <p>already have an account? <a href="login.php">login now</a><br/>&nbsp;<a href="../../index.php">back home</a></p> -->
+      <input type="submit" name="submit" value="Create Package" class="form-btn">
+      <p> &nbsp;<a href="/packages.php">back to packages</a></p>
    </form>
 
 </div>

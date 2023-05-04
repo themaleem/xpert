@@ -37,12 +37,6 @@
       }
 
 
-      // if(empty(trim($_POST["address"]))){
-      //    $address_err = "Please enter your address.";
-      // } else{
-      //    $address = trim($_POST["address"]);
-      // }
-
       // validate password
       if(empty(trim($_POST["password"]))){
          $password_err = "Please enter a password.";     

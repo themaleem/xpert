@@ -18,6 +18,7 @@
         }
 
         public function getId() { return $this->id; }
+        public function setId($value) {  $this->id= $value; }
         public function getName() { return $this->name; }
         public function getPrice() { return $this->price; }
         public function getEventType() { return $this->event_type; }

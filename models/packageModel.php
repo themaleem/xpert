@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../classes/package.php');
+require_once('./classes/package.php');
 
 class PackageModel {
     private $link;
@@ -13,7 +13,7 @@ class PackageModel {
         if (!isset($package)) {
             throw new Exception("Package object required");
         }
-        $sql = "INSERT INTO packages (name, price, event_type, description) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO packages (name, price, event_type, description) VALUES (?,?,?,?)";
 
         $name = $package->getName();
         $price = $package->getPrice();
@@ -52,8 +52,6 @@ class PackageModel {
         }
     }
 
-
-
     public function getPackageById($id) {
         $sql = 'SELECT * FROM packages WHERE id = ?';
         $stmt = $this->link->prepare($sql);
@@ -89,22 +87,44 @@ class PackageModel {
             $errorInfo = $stmt->errorInfo();
             throw new Exception("Could not retrieve packages: " . $errorInfo[2]);
         }
-
+        $result= $stmt->get_result();
+        
         $packages = array();
-        $row = $stmt->fetch();
-        while ($row != null) {
+        // $row = $stmt->fetch();
+        // if ($result->num_rows > 0){
+        //    $row=  $result->fetch_assoc();
+        // while ($row) {
+        //     $id = $row['id'];
+        //     $name = $row['name'];
+        //     $price = $row['price'];
+        //     $event_type = $row['event_type'];
+        //     $description = $row['description'];
+
+        //     $package = new Package($id, $name, $price, $event_type, $description);
+        //     $packages[$id] = $package;
+
+        //     // $row = $stmt->fetch();
+        //     $row=  $result->fetch_assoc();
+        // }}
+
+
+        while ($row = $result->fetch_assoc()) {
             $id = $row['id'];
             $name = $row['name'];
             $price = $row['price'];
             $event_type = $row['event_type'];
             $description = $row['description'];
-
+    
             $package = new Package($id, $name, $price, $event_type, $description);
             $packages[$id] = $package;
-
-            $row = $stmt->fetch();
         }
+        
+        // Close the mysqli connection
+        $this->link->close();
+    
         return $packages;
+    
+        
     }
 }
 

@@ -1,8 +1,20 @@
+<?php
+  require_once './utils/functions.php';
+  require_once 'models/packageModel.php';
+  require_once './utils/db.php';
+
+  start_session();
+  $connection = DB::getConnection();
+  $packageModel = new PackageModel($connection);
+
+  $packages = $packageModel->getPackages();
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Packages - Your Website Name</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="package.css">
 </head>
 <body>
   <!-- Navigation bar -->
@@ -16,61 +28,37 @@
     </div>
   </section>
 
+  <a href="/create_package.php">create package</a>
+
   <!-- Packages section -->
   <section class="packages">
-    <div class="package">
-      <img src="package1.jpg" alt="Package 1">
-      <h2>Package 1</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisi eu magna malesuada dignissim.</p>
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-      </ul>
-      <p class="price">$99</p>
-      <a href="#" class="btn">View Details</a>
-    </div>
+  <?php
+    foreach ($packages as $package) {
+      // Get the package details
+      $id = $package->getId();
+      $name = $package->getName();
+      $price = $package->getPrice();
+      $event_type = $package->getEventType();
+      $description = $package->getDescription();
 
-    <div class="package">
-      <img src="package2.jpg" alt="Package 2">
-      <h2>Package 2</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisi eu magna malesuada dignissim.</p>
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-        <li>Item 5</li>
-        <li>Item 6</li>
-      </ul>
-      <p class="price">$149</p>
-      <a href="#" class="btn">View Details</a>
-    </div>
-
-    <div class="package">
-      <img src="package3.jpg" alt="Package 3">
-      <h2>Package 3</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisi eu magna malesuada dignissim.</p>
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-        <li>Item 5</li>
-        <li>Item 6</li>
-        <li>Item 7</li>
-        <li>Item 8</li>
-      </ul>
-      <p class="price">$199</p>
-      <a href="#" class="btn">View Details</a>
-    </div>
+      // Display the package details
+      echo "<div class='package'>";
+      echo "<img src='https://images.unsplash.com/photo-1602631985686-1bb0e6a8696e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80' alt=$name>";
+      echo "<h2>$name</h2>";
+      echo "<p>$description</p>";
+      echo "<ul>";
+      // foreach ($package->getItems() as $item) {
+      //   echo "<li>$item</li>";
+      // }
+      echo "</ul>";
+      echo "<p class='price'>Price: $ $price</p>";
+      echo "<a href='book/package/$id' class='button'>Book Package</a>";
+      echo "</div>";
+    }
+  ?>
   </section>
 
   <!-- Footer -->
-  <?php include './includes/footer.php';?>
-
-  
-
+  <?php include './includes/footer.php'; ?>
 </body>
 </html>
